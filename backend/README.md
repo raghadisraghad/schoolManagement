@@ -49,53 +49,14 @@ This project is a web-based application to manage school clubs, allowing adminis
    cd schoolManagement
    ```
 
-2. Install dependencies for the backend:
+2. Docker:
    ```bash
-   cd backend
-   npm install
+   docker compose up --build
    ```
 
-3. Install dependencies for the frontend:
-   ```bash
-   cd ../frontend
-   npm install
-   ```
-
-4. Create a `.env` file in the backend folder and add the data from `.env.example`:
-
-5. Start both server and frontend at the same time:
-   ```bash
-   npm run dev
-   ```
-
-6. Access the application:
+3. Access the application:
    - Backend: `http://localhost:5000`
-   - Frontend: `http://localhost:8080`
-
----
-
-## Folder Structure
-
-```
-school-clubs-management
-├── backend
-│   ├── models
-│   ├── routes
-│   ├── controllers
-│   ├── middleware
-│   ├── server.js
-│   └── .env
-├── frontend
-│   ├── src
-│   │   ├── components
-│   │   ├── views
-│   │   ├── store
-│   │   ├── router
-│   │   └── App.vue
-│   └── public
-├── README.md
-└── package.json
-```
+   - Frontend: `http://localhost:80`
 
 ---
 

@@ -1,0 +1,27 @@
+services:
+  school_clubs_backend:
+    build: ./backend
+    container_name: backend
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    networks:
+      - network
+
+  school_clubs_frontend:
+    build: ./frontend
+    container_name: frontend
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - school_clubs_backend
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
