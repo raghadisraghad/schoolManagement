@@ -1,23 +1,52 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from 'vue'
+import { computed } from 'vue';
+import './assets/tailwind.css';
+
+interface UserInfo {
+  role: number;
+}
+
+const userInfo = ref<UserInfo | null>(null);
+
+onMounted(() => {
+  const storedUserInfo = sessionStorage.getItem('userInfo');
+  if (storedUserInfo) {
+    userInfo.value = JSON.parse(storedUserInfo);
+  }
+});
+
+// const isAdmin = computed(() => userInfo.value && userInfo.value.role === 1);
+const isAdmin = userInfo.value;
+const logout = () => {
+  sessionStorage.removeItem('userInfo');
+  sessionStorage.removeItem('userToken');
+  window.location.href = '/';
+}
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink v-if="!userInfo" to="/office">Office</RouterLink>
+        <RouterLink v-if="!userInfo" to="/myPage">My Page</RouterLink>
+        <RouterLink v-if="!isAdmin" to="/dashboard">Dashboard</RouterLink>
+        <RouterLink v-if="!isAdmin" to="/request">Request</RouterLink>
+        <RouterLink v-if="!userInfo" to="/profile">Profile</RouterLink>
+        <RouterLink v-if="!userInfo" to="/auth">Sign Up</RouterLink>
+        <RouterLink v-if="userInfo" to="/" @click="logout">Logout</RouterLink>
       </nav>
     </div>
   </header>
 
   <RouterView />
+
+  <footer></footer>
 </template>
 
 <style scoped>
